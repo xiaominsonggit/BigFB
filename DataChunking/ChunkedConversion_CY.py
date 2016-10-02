@@ -1,11 +1,15 @@
+#Function to convert large "train_numeric.csv" datafile into .hdf5 datafile containing multiple datasets
+#Author: CY
+#Date: 2016.10.01
+
 import numpy as np
 import pandas as pd
 import h5py
 
 filename = 'train_numeric.csv'
 
-f = h5py.File("Generated_train_First10000Lines.hdf5", "w")
-chunksize = 1*(10**4) 
+f = h5py.File("train_numeric.hdf5", "w")
+chunksize = 2*(10**5) 
 linecounter = 0
 chunknum = 1;
 for chunk in pd.read_csv(filename, chunksize = chunksize):
@@ -15,7 +19,7 @@ for chunk in pd.read_csv(filename, chunksize = chunksize):
 	f.create_dataset(datasetname,data=a)
 	print(linecounter)
 	chunknum = chunknum + 1
-	break
+
 """
 print(len(a))
 dset = f.create_dataset("Chunk_1", data = a)
